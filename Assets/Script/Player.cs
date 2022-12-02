@@ -6,21 +6,31 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    private float _x, _z, _speed;
-    private Transform _transform;
+    [Range(1, 100)] public float _speed;
+    private float _h, _v;
+    private Rigidbody _rb;
 
     private void Awake()
-    { _transform = GetComponent<Transform>(); }
-
-   
-    void Update()
-    { Move(); }
+    { _rb = GetComponent<Rigidbody>(); }
 
 
-    void Move()
-    { _x += Input.GetAxisRaw("Horizontal");
-        _z += Input.GetAxisRaw("Vertical");
-        Vector3 position = _transform.position;
-        position = new Vector3(_x, _transform.position.y, _z) * _speed * Time.deltaTime;
-        _transform.position = position; }
+    void Update() {
+        MoveRight();
+        MoveForward();
+    }
+
+
+    void MoveRight()
+    {
+        _h += Input.GetAxisRaw("Horizontal");
+        _rb.AddForce(Vector3.right * _h * Time.deltaTime, ForceMode.Impulse);
+        _rb.velocity = Vector3.zero;
+    }
+    
+    void MoveForward()
+    {
+        _v += Input.GetAxisRaw("Vertical");
+        _rb.AddForce(Vector3.forward * _v *Time.deltaTime, ForceMode.Impulse);
+        _rb.velocity = Vector3.zero;
+    }
 }
