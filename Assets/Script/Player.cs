@@ -7,30 +7,24 @@ public class Player : MonoBehaviour
 {
 
     [Range(1, 100)] public float _speed;
-    private float _h, _v;
-    private Rigidbody _rb;
-
-    private void Awake()
-    { _rb = GetComponent<Rigidbody>(); }
+    private CharacterController _controller;
+    private float gravityValue = -9.81f;
+    private Vector3 playerVelocity;
 
 
-    void Update() {
-        MoveRight();
-        MoveForward();
+    private void Awake() {
+        _controller = GetComponent<CharacterController>();
     }
 
 
-    void MoveRight()
+    void Update()
     {
-        _h += Input.GetAxisRaw("Horizontal");
-        _rb.AddForce(Vector3.right * _h * Time.deltaTime, ForceMode.Impulse);
-        _rb.velocity = Vector3.zero;
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        _controller.Move(move * Time.deltaTime * _speed);
+        playerVelocity.y += gravityValue * Time.deltaTime;
+        _controller.Move(playerVelocity * Time.deltaTime);
     }
+
     
-    void MoveForward()
-    {
-        _v += Input.GetAxisRaw("Vertical");
-        _rb.AddForce(Vector3.forward * _v *Time.deltaTime, ForceMode.Impulse);
-        _rb.velocity = Vector3.zero;
-    }
+    
 }
