@@ -1,11 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Camera : MonoBehaviour
 {
-    private float _x;
+    private float _x, _y;
+    private float _rotationSpeed = 2f;
+    private float _rotationMaxX = 45f;
 
     private void Update()
     {
@@ -14,7 +13,11 @@ public class Camera : MonoBehaviour
 
     void MouseMove()
     {
-        _x += Input.mousePosition.x;
-        transform.rotation = new Quaternion(0, _x, 0, 0);
+        _x += -Input.mousePosition.y * _rotationSpeed;
+        _x = Mathf.Clamp(_x, -_rotationMaxX, _rotationMaxX);
+        _y += -Input.mousePosition.x * _rotationSpeed;
+        _y = Mathf.Clamp(_y, -80, 90);
+
+        transform.localRotation *= Quaternion.Euler(_x, _y,0);
     }
 }
