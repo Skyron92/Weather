@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Roue : MonoBehaviour
 {
     public List<Button> Buttons = new List<Button>();
     private int index;
+    private ColorBlock _colorBlock;
 
     void Start()
     {
@@ -24,7 +26,7 @@ public class Roue : MonoBehaviour
     void ChangeMeteo()
     {
 
-        if (Input.GetKeyDown("r"))
+        if (Input.GetKeyDown("e"))
         {
             index++;
             transform.Rotate(Vector3.forward, 90);
@@ -35,7 +37,7 @@ public class Roue : MonoBehaviour
             Debug.Log(index);
         }
 
-        if (Input.GetKeyDown("e"))
+        if (Input.GetKeyDown("r"))
         {
             index--;
             transform.Rotate(Vector3.forward, -90);
@@ -44,6 +46,25 @@ public class Roue : MonoBehaviour
                 index = Buttons.Count - 1;
             }
             Debug.Log(index);
+        }
+
+        EventSystem.current.SetSelectedGameObject(Buttons[index].gameObject);
+
+        if (Input.GetButtonDown("Submit"))
+        {
+            if (index == 0)
+           {
+                SkyState.Sun();
+            } 
+            if (index == 1) {
+                SkyState.Snow();
+            } 
+            if (index == 3) {
+                SkyState.Rain();
+            } 
+            if (index == 2) {
+                SkyState.Wind();
+            }
         }
     }
 }

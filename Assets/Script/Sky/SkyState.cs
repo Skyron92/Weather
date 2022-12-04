@@ -6,22 +6,22 @@ public class SkyState : MonoBehaviour
 {
     public static bool isSunny, isRainy, isSnowy, isWindy;
 
-    public void Sun() {
+    public static void Sun() {
         isSunny = true;
         isRainy = isSnowy = isWindy = false;
     }
 
-    public void Rain() {
+    public static void Rain() {
         isRainy = true;
         isSnowy = isSunny = isWindy = false;
     }
 
-    public void Snow() {
+    public static void Snow() {
         isSnowy = true;
         isRainy = isSunny = isWindy = false;
     }
 
-    public void Wind() {
+    public static void Wind() {
         isWindy = true;
         isRainy = isSnowy = isSunny = false;
     }
