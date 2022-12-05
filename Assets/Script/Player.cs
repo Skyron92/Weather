@@ -50,5 +50,5 @@ public class Player : MonoBehaviour
 
         transform.localRotation = xQuat * yQuat;
     }
-    
+
 }
